@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import Text, WORD, Button
 from tkinter import ttk, Label
-from essential_generators import MarkovTextGenerator
+from wonderwords import RandomSentence
 
 PARAGRAPH_LENT = 70
 TIME = 59
@@ -27,9 +27,12 @@ class App(tk.Tk):
 
     @staticmethod
     def get_paragraph():
-        paragraph = MarkovTextGenerator()
-        random_paragraph = paragraph.gen_text(max_len=PARAGRAPH_LENT)
-        return random_paragraph
+        s = RandomSentence()
+        paragraph = ''
+        for sentence in range(14):
+            paragraph += s.sentence().replace('.', '')
+
+        return paragraph
 
 
 class Paragraph(ttk.Frame):
@@ -66,7 +69,7 @@ class TextInput(ttk.Frame):
 
     def restart_text(self):
         new_text = self.parent.get_paragraph()
-        principal_text.configure(text=new_text)
+        principal_text.configure(text=new_text.lower())
 
     def start_timer(self):
         global passed_seconds
